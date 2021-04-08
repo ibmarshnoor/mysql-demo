@@ -12,6 +12,7 @@ public class User {
 	@GeneratedValue()
 	@Id
 	private Integer id;
+	private String name;
 	public Integer getId() {
 		return id;
 	}
@@ -24,5 +25,5 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
-	private String name;
+	
 }
