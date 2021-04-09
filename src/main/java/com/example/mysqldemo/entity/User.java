@@ -3,8 +3,9 @@ package com.example.mysqldemo.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
 
-
+import com.sun.istack.NotNull;
 
 @Entity
 
@@ -12,7 +13,23 @@ public class User {
 	@GeneratedValue()
 	@Id
 	private Integer id;
+	@NotNull
 	private String name;
+	@Email
+    private String email;
+    private long phoneNumber;
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public long getPhoneNumber() {
+		return phoneNumber;
+	}
+	public void setPhoneNumber(long phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 	public Integer getId() {
 		return id;
 	}

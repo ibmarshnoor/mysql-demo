@@ -1,6 +1,7 @@
 package com.example.mysqldemo.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,23 +19,26 @@ public class UserService implements IUserService{
 		return savedUser.getId();
 	}
 	
-	public List<User> getUser() {
+	@Override
+	public List<User> getUsers() {
 		return userRepository.findAll();
 	}
-	
 
-	public void deleteUser(Integer userId) {
-		userRepository.deleteById(userId);
+	@Override
+	public Optional<User> getUser(int userId) {
+		return userRepository.findById(userId);
 	}
-
-//	public void updateUser(User user) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-
+    
+	@Override
 	public void updateUser(User user) {
 		 userRepository.save(user);
 	}
-
 	
+	@Override
+	public void deleteUser(Integer userId) {
+		userRepository.deleteById(userId);
+	}
+    
+	
+
 }
