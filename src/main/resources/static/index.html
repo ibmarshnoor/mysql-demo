@@ -12,7 +12,10 @@ table, th, td {
 <script type="text/javascript">
 	function sendData() {
 		function success(response){
-		//	console.log(response);
+		    if(!response.ok){
+		    	alert('error happend');
+		    	return;
+		    }
 			return response.json()
 		}
 		function errorHandler(error){
@@ -56,6 +59,10 @@ table, th, td {
 		.then(function(users){
 			console.log(users);
 			const table =document.getElementById('users');
+			const rows=table.children.length;
+			for(let count=0; count<rows;count++){
+			    table.children[0].remove();	
+			}
 			for(let index=0; index<users.length;index++){
 				console.log(users[index]);
 				const currentUser = users[index];
@@ -63,12 +70,15 @@ table, th, td {
 				const nameColumn = document.createElement('td');
 				const emailColumn = document.createElement('td');
 				const numberColumn = document.createElement('td');
+				const dobColumn = document.createElement('td');
 				nameColumn.append(currentUser.name);
 				emailColumn.append(currentUser.email);
 				numberColumn.append(currentUser.phoneNumber);
+				dobColumn.append(currentUser.dob);
 				row.appendChild(nameColumn);
 				row.appendChild(emailColumn);
 				row.appendChild(numberColumn);
+				row.appendChild(dobColumn);
 				table.appendChild(row);
 			}
 		})
@@ -128,6 +138,7 @@ table, th, td {
 	<thead><tr>Name</tr></thead>
 	<thead><tr>Email</tr></thead>
 	<thead><tr>PhoneNumber</tr></thead>
+	<thead><tr>DOB</tr></thead>
 	<tbody id="users"></tbody>
 	</table>
 	<input id="id" placeholder="User Id">

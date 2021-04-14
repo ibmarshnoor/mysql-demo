@@ -1,6 +1,6 @@
 package com.example.mysqldemo.entity;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,8 +24,11 @@ public class User {
 	public Date getDOB() {
 		return DOB;
 	}
-	public void setDOB(Date dOB) {
-		DOB = dOB;
+	public void setDOB(Date dob) {
+		if(dob.compareTo(new Date())>0) {
+			throw new IllegalArgumentException("DOB cannot be future dates");
+		}
+		this.DOB = dob;
 	}
 	public long getPhoneNumber() {
 		return phoneNumber;
