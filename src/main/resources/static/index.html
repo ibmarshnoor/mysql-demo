@@ -1,11 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style type="text/css">
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 <script type="text/javascript">
 	function sendData() {
-		fetch('/user', {
+		function success(response){
+		//	console.log(response);
+			return response.json()
+		}
+		function errorHandler(error){
+			console.log(error);
+		}
+	console.log('2');
+	//const userform = document.getElementById('userform');
+	const userform = document.getElementById('userform');
+	
+	if(!userform.checkValidity()){
+		alert('form is invalid');
+		return;
+	}
+	const promise=fetch('/user', { 
 			method : 'POST',
 			headers : {
 				'Content-Type' : 'application/json'
@@ -13,17 +34,44 @@
 			body : JSON.stringify({
 				name : document.getElementById('username').value,
 				email : document.getElementById('email').value,
-				mobileNumber : document.getElementById('mobileNumber').value
+				phoneNumber : document.getElementById('phoneNumber').value,
+				dob : document.getElementById('dobid').value
 			})
 		});
+ 	promise.then(success);
+    promise.then(function(data){
+	console.log(data);
+	});
+	promise.catch(function(error){
+		console.log(error);
+	});
+	console.log('1');
 	}
+	
 	function getData() {
-		let users = fetch('/user', {
-			method : 'GET',
-			headers : {
-				'Content-Type' : 'application/json'
+		const promise = fetch('/user');
+		promise.then(function(response){
+			return response.json();
+		})
+		.then(function(users){
+			console.log(users);
+			const table =document.getElementById('users');
+			for(let index=0; index<users.length;index++){
+				console.log(users[index]);
+				const currentUser = users[index];
+				const row=document.createElement('tr');
+				const nameColumn = document.createElement('td');
+				const emailColumn = document.createElement('td');
+				const numberColumn = document.createElement('td');
+				nameColumn.append(currentUser.name);
+				emailColumn.append(currentUser.email);
+				numberColumn.append(currentUser.phoneNumber);
+				row.appendChild(nameColumn);
+				row.appendChild(emailColumn);
+				row.appendChild(numberColumn);
+				table.appendChild(row);
 			}
-		});
+		})
 	}
 	function getDataById() {
 		let id = document.getElementById('id').value;
@@ -46,7 +94,7 @@
 			body : JSON.stringify({
 				name : document.getElementById('username').value,
 				email : document.getElementById('email').value,
-				mobileNumber : document.getElementById('mobileNumber').value
+				phoneNumber : document.getElementById('phoneNumber').value
 			})
 		});
 	}
@@ -57,24 +105,31 @@
 			headers : {
 				'Content-Type' : 'application/json'
 			}
-
 		});
 
 	}
 </script>
 </head>
 <body>
-	<input id="username" placeholder="Name">
+    <form id="userform">
+	<input id="username" placeholder="Name" required>
 	<br>
 	<input id="email" placeholder="Email">
 	<br>
-	<input id="mobileNumber" placeholder="PhoneNumber">
+	<input type="tel" id="phoneNumber" placeholder="PhoneNumber" pattern="[0-9]{10}" required>
 	<br>
+	<input type="date" placeholder="DOB" required id="dobid">
+	</form>
 	<button onclick="sendData()">Save</button>
 	<br>
 	<button onclick="getData()">Get</button>
 	<br>
-	<p id="users"></p>
+	<table>
+	<thead><tr>Name</tr></thead>
+	<thead><tr>Email</tr></thead>
+	<thead><tr>PhoneNumber</tr></thead>
+	<tbody id="users"></tbody>
+	</table>
 	<input id="id" placeholder="User Id">
 	<button onclick="getDataById()">GetById</button>
 	<button onclick="updateData()">Update</button>

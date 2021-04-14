@@ -1,5 +1,7 @@
 package com.example.mysqldemo.entity;
 
+import java.sql.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -18,11 +20,12 @@ public class User {
 	@Email
     private String email;
     private long phoneNumber;
-	public String getEmail() {
-		return email;
+    private Date DOB;
+	public Date getDOB() {
+		return DOB;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setDOB(Date dOB) {
+		DOB = dOB;
 	}
 	public long getPhoneNumber() {
 		return phoneNumber;
@@ -30,12 +33,20 @@ public class User {
 	public void setPhoneNumber(long phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
