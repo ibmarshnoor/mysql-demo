@@ -23,6 +23,12 @@ public class UserService implements IUserService{
 	public List<User> getUsers() {
 		return userRepository.findAll();
 	}
+	
+	@Override
+	public List<User> getUsersByName(String name) {
+		// TODO Auto-generated method stub
+		return userRepository.getUserByName(name);
+	}
 
 	@Override
 	public Optional<User> getUser(int userId) {
@@ -38,7 +44,5 @@ public class UserService implements IUserService{
 	public void deleteUser(Integer userId) {
 		userRepository.deleteById(userId);
 	}
-    
-	
 
 }

@@ -36,10 +36,14 @@ public class UserController {
 		return userService.getUsers();
 	}
 	
-	@GetMapping("user/{id}")
-	Optional<User> getUser(@PathVariable("id") int userId){
-		return userService.getUser(userId);
+	@GetMapping("user/{name}")
+	List<User> getUsers(@PathVariable("name") String name){
+		return userService.getUsersByName(name);
 	}
+//	@GetMapping("user/{id}")
+//	Optional<User> getUser(@PathVariable("id") int userId){
+//		return userService.getUser(userId);
+//	}
 	
 	@PutMapping("user/{id}")
 	void updateUser(@RequestBody User user,BindingResult bindingResult,@PathVariable("id") Integer userId) {
